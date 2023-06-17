@@ -42,6 +42,14 @@ export class AwsCdkDemoStack extends cdk.Stack {
     });
 
     /**
+     * CfnParameter is a construct that represents a CloudFormation parameter 
+     * These parameters can be passed during the deployment=>e.g 'cdk deploy --parameters duration=4'
+     */
+    const duration= new cdk.CfnParameter(this, 'duration', {
+      default:1,
+      type: 'Number',
+    });
+    /**
      * level 2 construct 
      * higher level => more  abstracted and developer-friendly 
      * It abstracts away many of the low-level details and provides simplified methods and properties for common bucket configurations.
@@ -50,9 +58,16 @@ export class AwsCdkDemoStack extends cdk.Stack {
     const l2Bucket=new Bucket(this, 'AWS-CDK-L2-Bucket', {
       bucketName: 'aws-cdk-l2-bucket',
       lifecycleRules: [{
-        expiration: Duration.days(3),
+        expiration: Duration.days(duration.valueAsNumber),
       }]
     })
+
+    // define CloudFormation output => will be shown in the CloudFormation output section + will be logged on the app local console
+    new cdk.CfnOutput(this, 'L2BucketName', {
+      value: l2Bucket.bucketName,
+    })
+
+
 
     //level 3 construct => define your own
     const l3Bucket = new customL3Bucket(this, 'AWS-CDK-L3-Bucket', 1);
