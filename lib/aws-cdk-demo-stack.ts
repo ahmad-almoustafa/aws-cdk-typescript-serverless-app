@@ -10,7 +10,7 @@ export class customL3Bucket extends Construct {
   constructor(scope: Construct, id: string, expirationInDays: number) {
     super(scope, id);
     new CfnBucket(this, id, {
-      bucketName: id.toLowerCase(),//Bucket name should not contain uppercase characters
+      bucketName: id.toLowerCase(),//Bucket name should be unique and not contain uppercase characters
       lifecycleConfiguration: {
         rules: [{
           expirationInDays: expirationInDays,
@@ -28,7 +28,7 @@ export class AwsCdkDemoStack extends cdk.Stack {
     /**
      * level 1 construct 
      * lower level => more flexibility and control
-     * directly represents the AWS CloudFormation resource type AWS::S3::Bucket => one-to-one mapping
+     * directly represents the AWS CloudFormation resource type AWS::S3::Bucket => one-to-one mapping =>Cfn 
      * explicitly define all the properties and their corresponding CloudFormation attributes.
      */
     new CfnBucket(this, 'AWS-CDK-L1-Bucket', {
@@ -54,9 +54,11 @@ export class AwsCdkDemoStack extends cdk.Stack {
      * higher level => more  abstracted and developer-friendly 
      * It abstracts away many of the low-level details and provides simplified methods and properties for common bucket configurations.
      * used for most S3 bucket scenarios
+     * won't be deleted when calling 'cdk destroy'=>  default removalPolicy: The bucket will be orphaned
      */
     const l2Bucket=new Bucket(this, 'AWS-CDK-L2-Bucket', {
       bucketName: 'aws-cdk-l2-bucket',
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
       lifecycleRules: [{
         expiration: Duration.days(duration.valueAsNumber),
       }]
