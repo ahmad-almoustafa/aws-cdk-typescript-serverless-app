@@ -1,0 +1,2 @@
+  //test apis using Rest  ClientVS code plugin
+    GET https://nf0181o10e.execute-api.ap-southeast-2.amazonaws.com/prod/hello  

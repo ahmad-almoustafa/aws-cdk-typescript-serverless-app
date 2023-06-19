@@ -18,6 +18,7 @@ export class ApiGatewayStack extends cdk.Stack{
         });
       
         // Create a resource and method
+        // endpoint e.g: https://nf0181o10e.execute-api.ap-southeast-2.amazonaws.com/prod/hello  
         const helloResource = api.root.addResource('hello');
         helloResource.addMethod('GET');
     }
