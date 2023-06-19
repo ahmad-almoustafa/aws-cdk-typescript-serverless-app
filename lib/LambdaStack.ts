@@ -5,6 +5,7 @@ import { Construct } from "constructs";
 import { join } from "path";
 
 export class LambdaStack extends Stack {
+    public readonly lambdaHandler;
     constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props);
         /**
@@ -12,7 +13,7 @@ export class LambdaStack extends Stack {
          * specifically designed to simplify the creation of Node.js Lambda functions
          * Automatically sets the runtime and handler 
          */
-        new NodejsFunction(this, 'HelloLambda', {
+        this.lambdaHandler= new NodejsFunction(this, 'HelloLambda', {
             runtime:Runtime.NODEJS_18_X,//default 16.x
             handler:'handler',//default index.handler
             entry:join(__dirname, '..', 'services', 'hello.ts')

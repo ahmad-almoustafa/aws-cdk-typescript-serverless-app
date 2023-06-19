@@ -6,7 +6,7 @@ import { PhotosStack } from '../lib/photos-stack';
 import { PhotosHandlerStack } from '../lib/photos-handler-stack';
 import { BucketTagger } from './Tagger';
 import { LambdaStack } from '../lib/LambdaStack';
-
+import { ApiGatewayStack } from '../lib/ApiGatewayStack';
 /**
  * if the app has multiple stacks => 
  * `cdk deploy --all` => deploy all => order is based on the dependency 
@@ -24,4 +24,5 @@ const app = new cdk.App();
 // // Apply the BucketTagger aspect
 // aspects.add(new BucketTagger({ 'Owner': 'Ahmad', 'key2':'val2' }));
 
-new LambdaStack(app, 'LambdaStack');
+const lambdaStack= new LambdaStack(app, 'LambdaStack');
+new ApiGatewayStack(app, 'ApiGatewayStack', { lambdaHandler: lambdaStack.lambdaHandler});
