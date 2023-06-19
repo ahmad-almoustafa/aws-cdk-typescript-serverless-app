@@ -10,7 +10,12 @@ interface PhotosHandlerStackProps extends cdk.StackProps {
 export class PhotosHandlerStack extends cdk.Stack {
     constructor(scope:Construct, id:string, props: PhotosHandlerStackProps) {
         super(scope, id, props);
-        
+
+        /**
+         * Lambda.Function 
+         * generic representation of an AWS Lambda function
+         * Supports multiple programming languages and runtime environments.
+         */
         new Lambda.Function(this, 'PhotosHandler',{
             runtime: Lambda.Runtime.NODEJS_18_X,
             handler: 'index.handler',//name of the file and the function that should be executed => expects an 'index.js'  with an exported function named 'handler'.
