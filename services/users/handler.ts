@@ -12,12 +12,27 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from "aws-lambda
  * 
  * handle external libraries
  *  npm i uuid @types/uuid // to install uuid
+ * 
+ * Lambda Architecture:
+ * Group by API Gateway resource => each resource has a Lambda function that handle all the methods(GET,POST,..etc)
+ * 
  */
 import { v4 } from 'uuid';
 exports.handler=async (event:APIGatewayProxyEvent, context:Context) :Promise<APIGatewayProxyResult> =>{
+    let message:string='';
+    switch(event.httpMethod){
+        case 'GET':
+            message=`Hello from GET, dynamoDBTable: ${process.env.dynamoDBTable}, uuid id:  ${v4()}`;
+        break;
+        case 'POST':
+            message=`Hello from POST, dynamoDBTable: ${process.env.dynamoDBTable}, uuid id:  ${v4()}`;
+
+        break;
+    }
+    
     const response: APIGatewayProxyResult={
         statusCode:200,
-        body:JSON.stringify(`Hello! I will read from  ${process.env.dynamoDBTable}, the id for id from external library uuid:  ${v4()}`)
+        body:JSON.stringify(message)
     }
     //log to cloudwatch
     console.log(event);

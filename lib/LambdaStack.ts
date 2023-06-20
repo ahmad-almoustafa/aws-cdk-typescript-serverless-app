@@ -17,10 +17,10 @@ export class LambdaStack extends Stack {
          * specifically designed to simplify the creation of Node.js Lambda functions
          * Automatically sets the runtime and handler 
          */
-        this.lambdaHandler= new NodejsFunction(this, 'HelloLambda', {
+        this.lambdaHandler= new NodejsFunction(this, 'UsersLambda', {
             runtime:Runtime.NODEJS_18_X,//default 16.x
             handler:'handler',//default index.handler
-            entry:join(__dirname, '..', 'services', 'hello.ts'),
+            entry:join(__dirname, '..', 'services','users', 'handler.ts'),
             environment: {
                 dynamoDBTable:props.dynamoDBTable.tableName,
             }
