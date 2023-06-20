@@ -25,6 +25,6 @@ const app = new cdk.App();
 // // Apply the BucketTagger aspect
 // aspects.add(new BucketTagger({ 'Owner': 'Ahmad', 'key2':'val2' }));
 
-new DynamoDBStack(app, 'DynamoDBStack');
-const lambdaStack= new LambdaStack(app, 'LambdaStack');
+const dynamoDBTable= new DynamoDBStack(app, 'DynamoDBStack');
+const lambdaStack= new LambdaStack(app, 'LambdaStack',{dynamoDBTable:dynamoDBTable.table});
 new ApiGatewayStack(app, 'ApiGatewayStack', { lambdaHandler: lambdaStack.lambdaHandler});

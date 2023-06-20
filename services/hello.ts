@@ -9,9 +9,9 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
  * APIGatewayProxyEvent: specific event object structure expected from API Gateway.
  */
 exports.handler=async (event:APIGatewayProxyEvent, context:APIGatewayProxyResult)=>{
-    
+
     return {
         statusCode:200,
-        body:JSON.stringify('Hello From Lambda!')
+        body:JSON.stringify(`Hello! I will read from  ${process.env.dynamoDBTable}`)
     }
 }
