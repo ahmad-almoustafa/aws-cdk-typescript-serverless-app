@@ -13,7 +13,7 @@ export class LambdaStack extends Stack {
     constructor(scope: Construct, id: string, props: LambdaStackProps) {
         super(scope, id, props);
         /**
-         * NodejsFunction
+         * NodejsFunction from Lambda Node.js Library
          * specifically designed to simplify the creation of Node.js Lambda functions
          * Automatically sets the runtime and handler 
          */

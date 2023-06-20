@@ -1,4 +1,5 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
+import { Handler } from "aws-cdk-lib/aws-lambda";
+import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from "aws-lambda"
 
 /**
  * In AWS Lambda, the event and context parameters are automatically provided by the Lambda service when your function is invoked. 
@@ -7,11 +8,18 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
  * 
  * npm i -D @types/aws-lambda // to install types
  * APIGatewayProxyEvent: specific event object structure expected from API Gateway.
+ * Context: represents the Lambda execution context.
+ * 
+ * handle external libraries
+ *  npm i uuid @types/uuid // to install uuid
  */
-exports.handler=async (event:APIGatewayProxyEvent, context:APIGatewayProxyResult)=>{
-
-    return {
+import { v4 } from 'uuid';
+exports.handler=async (event:APIGatewayProxyEvent, context:Context) :Promise<APIGatewayProxyResult> =>{
+    const response: APIGatewayProxyResult={
         statusCode:200,
-        body:JSON.stringify(`Hello! I will read from  ${process.env.dynamoDBTable}`)
+        body:JSON.stringify(`Hello! I will read from  ${process.env.dynamoDBTable}, the id for id from external library uuid:  ${v4()}`)
     }
+    //log to cloudwatch
+    console.log(event);
+    return response;
 }
