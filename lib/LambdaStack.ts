@@ -1,5 +1,6 @@
 import { Stack, StackProps } from "aws-cdk-lib";
 import { ITable } from "aws-cdk-lib/aws-dynamodb";
+import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import { Construct } from "constructs";
@@ -25,5 +26,15 @@ export class LambdaStack extends Stack {
                 dynamoDBTable:props.dynamoDBTable.tableName,
             }
         });
+        
+        // Add permissions to list S3 buckets
+        const s3ListBucketsPolicy= new PolicyStatement({
+            effect:Effect.ALLOW,
+            actions:['s3:ListAllMyBuckets'],
+            resources:['*']// Update with specific S3 bucket ARNs if needed
+        });
+
+        this.lambdaHandler.addToRolePolicy(s3ListBucketsPolicy);
+
     }
 }

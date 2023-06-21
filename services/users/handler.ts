@@ -18,11 +18,14 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from "aws-lambda
  * 
  */
 import { v4 } from 'uuid';
-exports.handler=async (event:APIGatewayProxyEvent, context:Context) :Promise<APIGatewayProxyResult> =>{
+import { listBucketsSDK2 } from "../SDKDemo";
+
+export const handler=async (event:APIGatewayProxyEvent, context:Context) :Promise<APIGatewayProxyResult> =>{
     let message:string='';
+    const bucketList=await listBucketsSDK2();
     switch(event.httpMethod){
         case 'GET':
-            message=`Hello from GET, dynamoDBTable: ${process.env.dynamoDBTable}, uuid id:  ${v4()}`;
+            message=`Hello from GET, dynamoDBTable: ${process.env.dynamoDBTable}, uuid id:  ${v4()}, buckets list: ${JSON.stringify(bucketList)}`;
         break;
         case 'POST':
             message=`Hello from POST, dynamoDBTable: ${process.env.dynamoDBTable}, uuid id:  ${v4()}`;
