@@ -18,11 +18,11 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from "aws-lambda
  * 
  */
 import { v4 } from 'uuid';
-import { listBucketsSDK2 } from "../SDKDemo";
+import { listBucketsSDK3 } from "../SDKDemo";
 
 export const handler=async (event:APIGatewayProxyEvent, context:Context) :Promise<APIGatewayProxyResult> =>{
     let message:string='';
-    const bucketList=await listBucketsSDK2();
+    const bucketList=await listBucketsSDK3();
     switch(event.httpMethod){
         case 'GET':
             message=`Hello from GET, dynamoDBTable: ${process.env.dynamoDBTable}, uuid id:  ${v4()}, buckets list: ${JSON.stringify(bucketList)}`;
