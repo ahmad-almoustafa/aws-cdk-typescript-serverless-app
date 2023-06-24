@@ -1,2 +1,15 @@
-  //test apis using Rest  ClientVS code plugin
-    GET https://nf0181o10e.execute-api.ap-southeast-2.amazonaws.com/prod/hello  
+//test apis using Rest Client VS code plugin
+GET https://nf0181o10e.execute-api.ap-southeast-2.amazonaws.com/prod/users  
+
+### make the body object placed after a blank line
+POST https://nf0181o10e.execute-api.ap-southeast-2.amazonaws.com/prod/users
+content-type: application/json
+
+{    
+    "firstName":"John",
+    "lastName":"Doe"
+}
+
+
+
+ 

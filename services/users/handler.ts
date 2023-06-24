@@ -18,26 +18,41 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from "aws-lambda
  * 
  */
 import { v4 } from 'uuid';
-import { listBucketsSDK3 } from "../SDKDemo";
+import { addUser } from "./addUser";
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { getTableDescription } from "./getTableDescription";
 
+//DynamoDBClient here so it can be reused in all methods
+const dynamoDBClient = new DynamoDBClient({});
 export const handler=async (event:APIGatewayProxyEvent, context:Context) :Promise<APIGatewayProxyResult> =>{
     let message:string='';
-    const bucketList=await listBucketsSDK3();
-    switch(event.httpMethod){
-        case 'GET':
-            message=`Hello from GET, dynamoDBTable: ${process.env.dynamoDBTable}, uuid id:  ${v4()}, buckets list: ${JSON.stringify(bucketList)}`;
-        break;
-        case 'POST':
-            message=`Hello from POST, dynamoDBTable: ${process.env.dynamoDBTable}, uuid id:  ${v4()}`;
-
-        break;
-    }
+    //get table info
+    //await getTableDescription(dynamoDBClient);
+    try{
+        switch(event.httpMethod){
+            case 'GET':
+                message=`Hello from GET, dynamoDBTable: ${process.env.dynamoDBTable}, uuid id:  ${v4()}`;
+                return {
+                    statusCode: 200,
+                    body: JSON.stringify(message),
+                  };
+            break;
+            case 'POST':
+                const response=   addUser(event,dynamoDBClient);
+                return response;
+            break;
+            default:
+                return {
+                  statusCode: 404,
+                  body: JSON.stringify('Not Found'),
+                };
+        }
     
-    const response: APIGatewayProxyResult={
-        statusCode:200,
-        body:JSON.stringify(message)
+    }catch( error){
+        console.log(error);
+        return {
+            statusCode:500,
+            body:JSON.stringify(error)
+        }      
     }
-    //log to cloudwatch
-    console.log(event);
-    return response;
 }

@@ -27,14 +27,14 @@ export class LambdaStack extends Stack {
             }
         });
         
-        // Add permissions to list S3 buckets
-        const s3ListBucketsPolicy= new PolicyStatement({
+        // Add permissions for dynamodb:PutItem
+        const dynamodbPolicy= new PolicyStatement({
             effect:Effect.ALLOW,
-            actions:['s3:ListAllMyBuckets'],
-            resources:['*']// Update with specific S3 bucket ARNs if needed
+            actions:['dynamodb:PutItem'],
+            resources:[props.dynamoDBTable.tableArn]//Resource Users must be in ARN format or "*".
         });
 
-        this.lambdaHandler.addToRolePolicy(s3ListBucketsPolicy);
+        this.lambdaHandler.addToRolePolicy(dynamodbPolicy);
 
     }
 }
