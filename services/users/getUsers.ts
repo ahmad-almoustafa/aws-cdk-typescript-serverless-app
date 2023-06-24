@@ -1,6 +1,6 @@
 import { DynamoDBClient, GetItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
-
+import { unmarshall } from "@aws-sdk/util-dynamodb";
 export const getUsers=async (event:APIGatewayProxyEvent,dynamoDBClient:DynamoDBClient):Promise<APIGatewayProxyResult>=>{
     const id  = event.queryStringParameters?.id;
     if(id){// id is provided=> get user by id
@@ -13,10 +13,12 @@ export const getUsers=async (event:APIGatewayProxyEvent,dynamoDBClient:DynamoDBC
         const response=await dynamoDBClient.send(getItemCommand);
         console.log('response',response.Item);
         if (response.Item){// item found
+            // Unmarshaling: Convert DynamoDB attribute values to JavaScript object
+            const unmashalledItem = unmarshall(response.Item)
             // Map the response to APIGatewayProxyResult format
             return {
                 statusCode: 200,
-                body: JSON.stringify(response.Item)
+                body: JSON.stringify(unmashalledItem)
             };
         }else{
             return {
@@ -31,11 +33,13 @@ export const getUsers=async (event:APIGatewayProxyEvent,dynamoDBClient:DynamoDBC
         })
         const response=await dynamoDBClient.send(scanCommand);
         console.log('response',response.Items);
-        
+        // Unmarshaling: Convert DynamoDB attribute values to JavaScript object => for all items
+        const unmashalledItems = response.Items?.map(item => unmarshall(item));
+
         // Map the response to APIGatewayProxyResult format
         return {
             statusCode: 200,
-            body: JSON.stringify(response.Items)
+            body: JSON.stringify(unmashalledItems)
         };
     }
 }
