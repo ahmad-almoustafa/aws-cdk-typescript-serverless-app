@@ -30,7 +30,11 @@ export class LambdaStack extends Stack {
         // Add permissions for dynamodb:PutItem
         const dynamodbPolicy= new PolicyStatement({
             effect:Effect.ALLOW,
-            actions:['dynamodb:PutItem'],
+            actions:[
+                'dynamodb:PutItem',
+                'dynamodb:Scan',
+                'dynamodb:GetItem'
+            ],
             resources:[props.dynamoDBTable.tableArn]//Resource Users must be in ARN format or "*".
         });
 

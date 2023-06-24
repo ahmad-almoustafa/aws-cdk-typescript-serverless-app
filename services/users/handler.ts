@@ -21,6 +21,7 @@ import { v4 } from 'uuid';
 import { addUser } from "./addUser";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { getTableDescription } from "./getTableDescription";
+import { getUsers } from "./getUsers";
 
 //DynamoDBClient here so it can be reused in all methods
 const dynamoDBClient = new DynamoDBClient({});
@@ -31,11 +32,8 @@ export const handler=async (event:APIGatewayProxyEvent, context:Context) :Promis
     try{
         switch(event.httpMethod){
             case 'GET':
-                message=`Hello from GET, dynamoDBTable: ${process.env.dynamoDBTable}, uuid id:  ${v4()}`;
-                return {
-                    statusCode: 200,
-                    body: JSON.stringify(message),
-                  };
+                const getResponse=  getUsers(event,dynamoDBClient);// need to wait to get the response
+                return getResponse;
             break;
             case 'POST':
                 const response=   addUser(event,dynamoDBClient);
