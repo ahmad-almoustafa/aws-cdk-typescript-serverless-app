@@ -22,6 +22,7 @@ import { addUser } from "./addUser";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { getTableDescription } from "./getTableDescription";
 import { getUsers } from "./getUsers";
+import { updateUser } from "./updateUser";
 
 //DynamoDBClient here so it can be reused in all methods
 const dynamoDBClient = new DynamoDBClient({});
@@ -36,8 +37,13 @@ export const handler=async (event:APIGatewayProxyEvent, context:Context) :Promis
                 return getResponse;
             break;
             case 'POST':
-                const response=   addUser(event,dynamoDBClient);
-                return response;
+                const postResponse=   addUser(event,dynamoDBClient);
+                return postResponse;
+            break;
+            case 'PUT':
+                const putResponse=   updateUser(event,dynamoDBClient);
+                console.log('response', putResponse)
+                return putResponse;
             break;
             default:
                 return {

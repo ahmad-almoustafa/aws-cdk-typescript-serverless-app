@@ -33,7 +33,8 @@ export class LambdaStack extends Stack {
             actions:[
                 'dynamodb:PutItem',
                 'dynamodb:Scan',
-                'dynamodb:GetItem'
+                'dynamodb:GetItem',
+                'dynamodb:UpdateItem'
             ],
             resources:[props.dynamoDBTable.tableArn]//Resource Users must be in ARN format or "*".
         });
