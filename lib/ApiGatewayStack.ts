@@ -23,6 +23,7 @@ export class ApiGatewayStack extends cdk.Stack{
         usersResource.addMethod('GET');
         usersResource.addMethod('POST');
         usersResource.addMethod('PUT');//Don't forget to add the method you need
+        usersResource.addMethod('DELETE');
 
     }
 

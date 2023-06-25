@@ -23,6 +23,7 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { getTableDescription } from "./getTableDescription";
 import { getUsers } from "./getUsers";
 import { updateUser } from "./updateUser";
+import { deleteUser } from "./deleteUser";
 
 //DynamoDBClient here so it can be reused in all methods
 const dynamoDBClient = new DynamoDBClient({});
@@ -44,6 +45,11 @@ export const handler=async (event:APIGatewayProxyEvent, context:Context) :Promis
                 const putResponse=   updateUser(event,dynamoDBClient);
                 console.log('response', putResponse)
                 return putResponse;
+            break;
+            case 'DELETE':
+                const deleteResponse=   deleteUser(event,dynamoDBClient);
+                console.log('response', deleteResponse)
+                return deleteResponse;
             break;
             default:
                 return {

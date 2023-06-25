@@ -16,10 +16,18 @@ import {handler} from '../services/users/handler';
 //  } as any,{} as any);
 
 
-handler({
-    httpMethod:'PUT',
+// handler({
+//     httpMethod:'PUT',
+//    queryStringParameters:{
+//       id:'9e45cd44-b85b-4e9c-a55e-5b4abd1b299d'
+//    },
+//    body:JSON.stringify({firstName:"John update ",lastName:"Doe update"})  
+//  } as any,{} as any);
+
+
+ handler({
+   httpMethod:'DELETE',
    queryStringParameters:{
-      id:'9e45cd44-b85b-4e9c-a55e-5b4abd1b299d'
-   },
-   body:JSON.stringify({firstName:"John update ",lastName:"Doe update"})  
- } as any,{} as any);
+      id:'2ae19257-6cf6-4db7-ac03-cb062abca624'
+   }
+} as any,{} as any);
