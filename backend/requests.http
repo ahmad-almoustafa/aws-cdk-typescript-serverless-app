@@ -1,0 +1,26 @@
+//test apis using Rest Client VS code plugin
+GET https://e7fx0p93yj.execute-api.ap-southeast-2.amazonaws.com/prod/products
+
+###
+GET https://e7fx0p93yj.execute-api.ap-southeast-2.amazonaws.com/prod/products?id=b548922a-98a9-4796-b910-6888c9e7d64e
+
+### make the body object placed after a blank line
+POST https://e7fx0p93yj.execute-api.ap-southeast-2.amazonaws.com/prod/products
+content-type: application/json
+
+{    
+    "title":"iPhone 9",
+    "price":1200
+}
+
+###
+PUT https://e7fx0p93yj.execute-api.ap-southeast-2.amazonaws.com/prod/products?id=b548922a-98a9-4796-b910-6888c9e7d64e
+content-type: application/json
+
+{    
+    "title":"UpdatedTest 11",
+    "price":"100"
+}
+
+###
+DELETE https://e7fx0p93yj.execute-api.ap-southeast-2.amazonaws.com/prod/products?id=6072e4ec-f6b6-4651-bd15-e3cff2e68ff2
