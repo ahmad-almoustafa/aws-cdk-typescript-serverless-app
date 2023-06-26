@@ -8,6 +8,7 @@ import { BucketTagger } from './Tagger';
 import { LambdaStack } from '../lib/LambdaStack';
 import { ApiGatewayStack } from '../lib/ApiGatewayStack';
 import { DynamoDBStack } from '../lib/DynamoDBStack';
+import { AuthStack } from '../lib/AuthStack';
 /**
  * if the app has multiple stacks => 
  * `cdk deploy --all` => deploy all => order is based on the dependency 
@@ -27,4 +28,8 @@ const app = new cdk.App();
 
 const dynamoDBTable= new DynamoDBStack(app, 'DynamoDBStack');
 const lambdaStack= new LambdaStack(app, 'LambdaStack',{dynamoDBTable:dynamoDBTable.table});
+new AuthStack(app, 'AuthStack');
 new ApiGatewayStack(app, 'ApiGatewayStack', { lambdaHandler: lambdaStack.lambdaHandler});
+
+
+
