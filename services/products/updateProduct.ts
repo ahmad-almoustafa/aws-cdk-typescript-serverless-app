@@ -1,7 +1,7 @@
 import { DynamoDBClient, UpdateItemCommand } from "@aws-sdk/client-dynamodb"
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 
-export const updateUser= async (event: APIGatewayProxyEvent, dynamoDBClient: DynamoDBClient): Promise<APIGatewayProxyResult> => {
+export const updateProduct= async (event: APIGatewayProxyEvent, dynamoDBClient: DynamoDBClient): Promise<APIGatewayProxyResult> => {
     const id  = event.queryStringParameters?.id;
     if(process.env.dynamoDBTable && event.body && id){// all args are provided
         const item = JSON.parse(event.body)
@@ -10,17 +10,17 @@ export const updateUser= async (event: APIGatewayProxyEvent, dynamoDBClient: Dyn
             Key:   { id: { S: id } }, //Key is capitalized
             /**
              * specifies the update operation to be performed on the item.
-             * In this case, it uses the SET action to update the attributes firstName and lastName.
-             * :firstName and :lastName are placeholders for the actual values to be updated,
+             * In this case, it uses the SET action to update the attributes title and price.
+             * :title and :price are placeholders for the actual values to be updated,
              * and they will be replaced with the corresponding values in the ExpressionAttributeValues object.
              */
-            UpdateExpression: "SET firstName = :firstName, lastName = :lastName", // Update expression
+            UpdateExpression: "SET title = :title, price = :price", // Update expression
             /**
              * provides the actual values to be substituted in the UpdateExpression.
              */
             ExpressionAttributeValues: {
-              ":firstName": { S: item.firstName }, // Attribute values in the update expression
-              ":lastName": { S: item.lastName },
+              ":title": { S: item.title }, // Attribute values in the update expression
+              ":price": { N: item.price },
             },
             /**
              * UpdateItem operation determines which attributes of the item should be returned as the result of the update.

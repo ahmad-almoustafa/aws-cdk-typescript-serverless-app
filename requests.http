@@ -1,26 +1,26 @@
 //test apis using Rest Client VS code plugin
-GET https://h1cueu5qbd.execute-api.ap-southeast-2.amazonaws.com/prod/users
+GET https://05zd1pey27.execute-api.ap-southeast-2.amazonaws.com/prod/products
 
 ###
-GET https://h1cueu5qbd.execute-api.ap-southeast-2.amazonaws.com/prod/users?id=9e45cd44-b85b-4e9c-a55e-5b4abd1b299d
+GET https://05zd1pey27.execute-api.ap-southeast-2.amazonaws.com/prod/products?id=6072e4ec-f6b6-4651-bd15-e3cff2e68ff2
 
 ### make the body object placed after a blank line
-POST https://h1cueu5qbd.execute-api.ap-southeast-2.amazonaws.com/prod/users
+POST https://05zd1pey27.execute-api.ap-southeast-2.amazonaws.com/prod/products
 content-type: application/json
 
 {    
-    "firstName":"John",
-    "lastName":"Doe"
+    "title":"iPhone 9",
+    "price":1200
 }
 
 ###
-PUT https://h1cueu5qbd.execute-api.ap-southeast-2.amazonaws.com/prod/users?id=9e45cd44-b85b-4e9c-a55e-5b4abd1b299d
+PUT https://05zd1pey27.execute-api.ap-southeast-2.amazonaws.com/prod/products?id=ef1b4ebe-c5f1-4a99-a777-08980c68b499
 content-type: application/json
 
 {    
-    "firstName":"UpdatedTest",
-    "lastName":"UpdatedTest"
+    "title":"UpdatedTest 11",
+    "price":"100"
 }
 
 ###
-DELETE https://9akoudm677.execute-api.ap-southeast-2.amazonaws.com/prod/users?id=4b826743-bfba-46dc-a28f-125c618ead45
+DELETE https://05zd1pey27.execute-api.ap-southeast-2.amazonaws.com/prod/products?id=6072e4ec-f6b6-4651-bd15-e3cff2e68ff2

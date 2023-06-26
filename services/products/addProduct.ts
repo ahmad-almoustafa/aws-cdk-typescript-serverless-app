@@ -3,7 +3,7 @@ import { AttributeValue, DynamoDBClient, PutItemCommand } from "@aws-sdk/client-
 import { marshall } from "@aws-sdk/util-dynamodb";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { v4 } from "uuid";
-export const addUser=async (event:APIGatewayProxyEvent, dynamoDBClient:DynamoDBClient):Promise<APIGatewayProxyResult>=>{
+export const addProduct=async (event:APIGatewayProxyEvent, dynamoDBClient:DynamoDBClient):Promise<APIGatewayProxyResult>=>{
     const randomId=v4();
     if( event.body && process.env.dynamoDBTable ){
         const item=JSON.parse(event.body);

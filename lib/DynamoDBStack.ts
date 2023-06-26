@@ -8,9 +8,9 @@ export class DynamoDBStack extends Stack{
     constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props);
         // Create a DynamoDB table
-        this.table= new Table(this, 'Users', {
+        this.table= new Table(this, 'Products', {
              partitionKey: { name: 'id', type:AttributeType.STRING },
-            tableName: 'Users',
+            tableName: 'Products',
             /**
              * DESTROY: The resource will be deleted when the stack is deleted or updated.
              * You can modify the removal policy as per your requirements - default is RETAIN

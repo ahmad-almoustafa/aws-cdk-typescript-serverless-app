@@ -1,7 +1,7 @@
 import { DynamoDBClient, GetItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
-export const getUsers=async (event:APIGatewayProxyEvent,dynamoDBClient:DynamoDBClient):Promise<APIGatewayProxyResult>=>{
+export const getProducts=async (event:APIGatewayProxyEvent,dynamoDBClient:DynamoDBClient):Promise<APIGatewayProxyResult>=>{
     const id  = event.queryStringParameters?.id;
     if(id){// id is provided=> get user by id
         const getItemCommand= new GetItemCommand({
@@ -27,7 +27,7 @@ export const getUsers=async (event:APIGatewayProxyEvent,dynamoDBClient:DynamoDBC
             };
         }
 
-    }else{//get all users 
+    }else{//get all products 
         const scanCommand= new ScanCommand({
              TableName: process.env.dynamoDBTable
         })

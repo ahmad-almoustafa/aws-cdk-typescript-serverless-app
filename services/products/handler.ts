@@ -18,12 +18,12 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from "aws-lambda
  * 
  */
 import { v4 } from 'uuid';
-import { addUser } from "./addUser";
+import { addProduct } from "./addProduct";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { getTableDescription } from "./getTableDescription";
-import { getUsers } from "./getUsers";
-import { updateUser } from "./updateUser";
-import { deleteUser } from "./deleteUser";
+import { getProducts } from "./getProducts";
+import { updateProduct } from "./updateProduct";
+import { deleteProduct } from "./deleteProduct";
 
 //DynamoDBClient here so it can be reused in all methods
 const dynamoDBClient = new DynamoDBClient({});
@@ -34,20 +34,20 @@ export const handler=async (event:APIGatewayProxyEvent, context:Context) :Promis
     try{
         switch(event.httpMethod){
             case 'GET':
-                const getResponse=  getUsers(event,dynamoDBClient);// need to wait to get the response
+                const getResponse=  getProducts(event,dynamoDBClient);// need to wait to get the response
                 return getResponse;
             break;
             case 'POST':
-                const postResponse=   addUser(event,dynamoDBClient);
+                const postResponse=   addProduct(event,dynamoDBClient);
                 return postResponse;
             break;
             case 'PUT':
-                const putResponse=   updateUser(event,dynamoDBClient);
+                const putResponse=   updateProduct(event,dynamoDBClient);
                 console.log('response', putResponse)
                 return putResponse;
             break;
             case 'DELETE':
-                const deleteResponse=   deleteUser(event,dynamoDBClient);
+                const deleteResponse=   deleteProduct(event,dynamoDBClient);
                 console.log('response', deleteResponse)
                 return deleteResponse;
             break;

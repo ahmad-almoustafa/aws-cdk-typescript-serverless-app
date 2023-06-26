@@ -1,7 +1,7 @@
 import { DeleteItemCommand, DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { APIGatewayEvent, APIGatewayProxyResult } from "aws-lambda";
 
-export const deleteUser= async (event:APIGatewayEvent,dynamoDBClient:DynamoDBClient):Promise<APIGatewayProxyResult>=>{
+export const deleteProduct= async (event:APIGatewayEvent,dynamoDBClient:DynamoDBClient):Promise<APIGatewayProxyResult>=>{
     const id=event.queryStringParameters?.id;
     if(process.env.dynamoDBTable && id){
         const params={

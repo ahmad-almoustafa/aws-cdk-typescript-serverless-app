@@ -19,11 +19,11 @@ export class ApiGatewayStack extends cdk.Stack{
       
         // Create a resource and method
         // endpoint e.g: https://nf0181o10e.execute-api.ap-southeast-2.amazonaws.com/prod/hello  
-        const usersResource = api.root.addResource('users');
-        usersResource.addMethod('GET');
-        usersResource.addMethod('POST');
-        usersResource.addMethod('PUT');//Don't forget to add the method you need
-        usersResource.addMethod('DELETE');
+        const productsResource = api.root.addResource('products');
+        productsResource.addMethod('GET');
+        productsResource.addMethod('POST');
+        productsResource.addMethod('PUT');//Don't forget to add the method you need
+        productsResource.addMethod('DELETE');
 
     }
 

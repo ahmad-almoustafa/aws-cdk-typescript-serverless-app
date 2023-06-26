@@ -17,7 +17,7 @@
             ],
             "env": {
                 "AWS_REGION": "ap-southeast-2",
-                "dynamoDBTable": "Users" //will resolve to  process.env.dynamoDBTable during debug time
+                "dynamoDBTable": "Products" //will resolve to  process.env.dynamoDBTable during debug time
             }
         }
     ]

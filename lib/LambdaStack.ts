@@ -18,10 +18,10 @@ export class LambdaStack extends Stack {
          * specifically designed to simplify the creation of Node.js Lambda functions
          * Automatically sets the runtime and handler 
          */
-        this.lambdaHandler= new NodejsFunction(this, 'UsersLambda', {
+        this.lambdaHandler= new NodejsFunction(this, 'ProductsLambda', {
             runtime:Runtime.NODEJS_18_X,//default 16.x
             handler:'handler',//default index.handler
-            entry:join(__dirname, '..', 'services','users', 'handler.ts'),
+            entry:join(__dirname, '..', 'services','products', 'handler.ts'),
             environment: {
                 dynamoDBTable:props.dynamoDBTable.tableName,
             }
@@ -37,7 +37,7 @@ export class LambdaStack extends Stack {
                 'dynamodb:UpdateItem',
                 'dynamodb:DeleteItem'
             ],
-            resources:[props.dynamoDBTable.tableArn]//Resource Users must be in ARN format or "*".
+            resources:[props.dynamoDBTable.tableArn]//Resource Products must be in ARN format or "*".
         });
 
         this.lambdaHandler.addToRolePolicy(dynamodbPolicy);
