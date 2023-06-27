@@ -1,10 +1,12 @@
 import * as cdk from 'aws-cdk-lib'
-import { LambdaRestApi } from "aws-cdk-lib/aws-apigateway";
+import { AuthorizationType, CognitoUserPoolsAuthorizer, LambdaRestApi, MethodOptions } from "aws-cdk-lib/aws-apigateway";
+import { IUserPool } from 'aws-cdk-lib/aws-cognito';
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import { Construct } from "constructs";
 
 interface ApiGatewayStackProps extends cdk.StackProps{
     lambdaHandler: NodejsFunction;
+    userPool:IUserPool;
 }
 export class ApiGatewayStack extends cdk.Stack{
     constructor(scope: Construct, id: string, props: ApiGatewayStackProps) {
@@ -17,13 +19,29 @@ export class ApiGatewayStack extends cdk.Stack{
             proxy: false, // Set to true if you want to use proxy integration
         });
       
+        // Create CognitoUserPoolsAuthorizer and attach it to the API Gateway
+        const authorizer=new CognitoUserPoolsAuthorizer(this,'ProductsApiAuthorizer',{ 
+            cognitoUserPools:[props.userPool],
+            identitySource:'method.request.header.Authorization',
+
+        });
+        authorizer._attachToApi(api);
+
+        // Create a MethodOptions object to define the authorization configuration for an API method
+        const optionsWithAuth: MethodOptions = {
+            authorizationType: AuthorizationType.COGNITO, // Set the authorization type to Cognito
+            authorizer: {
+            authorizerId: authorizer.authorizerId, // Specify the authorizer ID using the value from the CognitoUserPoolsAuthorizer instance
+            },
+        };
+
         // Create a resource and method
         // endpoint e.g: https://nf0181o10e.execute-api.ap-southeast-2.amazonaws.com/prod/hello  
         const productsResource = api.root.addResource('products');
-        productsResource.addMethod('GET');
-        productsResource.addMethod('POST');
-        productsResource.addMethod('PUT');//Don't forget to add the method you need
-        productsResource.addMethod('DELETE');
+        productsResource.addMethod('GET',undefined,optionsWithAuth);
+        productsResource.addMethod('POST',undefined,optionsWithAuth);
+        productsResource.addMethod('PUT',undefined,optionsWithAuth);//Don't forget to add the method you need
+        productsResource.addMethod('DELETE',undefined,optionsWithAuth);
 
     }
 

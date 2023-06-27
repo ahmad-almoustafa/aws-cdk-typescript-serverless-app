@@ -10,7 +10,7 @@ interface LambdaStackProps extends StackProps{
     dynamoDBTable: ITable;
 }
 export class LambdaStack extends Stack {
-    public readonly lambdaHandler;
+    public readonly lambdaHandler;//can be assigned a value within the constructor of the class.
     constructor(scope: Construct, id: string, props: LambdaStackProps) {
         super(scope, id, props);
         /**

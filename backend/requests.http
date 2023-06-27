@@ -1,11 +1,19 @@
 //test apis using Rest Client VS code plugin
-GET https://e7fx0p93yj.execute-api.ap-southeast-2.amazonaws.com/prod/products
+
+@url= https://e7fx0p93yj.execute-api.ap-southeast-2.amazonaws.com/prod
+@token= eyJraWQiOiJVbzRQb0R1MGc5RzYzV3Uwc2p3YlwvM0dqd0lXNTROOCt1M0pxenUzZ0xYST0iLCJhbGciOiJSUzI1NiJ9.eyJvcmlnaW5fanRpIjoiY2U3NGFkYTEtNWEzMS00NDAwLWJhNmUtYjNkYjU4YmJkZTcwIiwic3ViIjoiNDUyOTZiYTQtYjI5OC00YTRhLTlmMTgtNDRiMWQ0ODJkYjRiIiwiYXVkIjoiMmU1dWt1OWp2Yzk4ajV0dTQ4bnNlOXE0ajQiLCJldmVudF9pZCI6IjE1NTVkZDE1LThiYmUtNGU2OS04YWFlLWZhMDAyNTM1NzgyZSIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNjg3ODUzODcwLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGhlYXN0LTIuYW1hem9uYXdzLmNvbVwvYXAtc291dGhlYXN0LTJfVkdrUmVqWXBEIiwiY29nbml0bzp1c2VybmFtZSI6InRlc3RfdXNlcl9uYW1lIiwiZXhwIjoxNjg3ODU3NDcwLCJpYXQiOjE2ODc4NTM4NzAsImp0aSI6IjZlOGRmNDNlLTFjYTUtNDhjNy1iYzJkLWNkOTlmNjBhZTg1NiJ9.Ov09GcZx-UD3kskOBL2_BVnIbx7UC47f9dBwbESx_ra84ess3W82Fi1ZS4QAtKUeWKNrJEZ2jVxTxNGhZRW_ziVOo4j95oqW1pTZlzZkU0mu7QXZGXZuASM0WRJRKGPSFkhG3XrmXryqxB7NFxIgwck5ZJQSKVzxs96grC0duOu1F_44l_lR77A8046D61CTEwNrt3dJiyYSXMhoC3BYndD_8BvpvzKcAB1IdqgJwGP5FHdHAwsm_lDjod3mL6N4eHLYlDD04VXitQcGcrYivR4n7ULvBxERozOzCTwNnA-Gv1e6qrjeeUmVd-M1xQ4RNO7ks1yWdVjBZGwIxydG7Q
 
 ###
-GET https://e7fx0p93yj.execute-api.ap-southeast-2.amazonaws.com/prod/products?id=b548922a-98a9-4796-b910-6888c9e7d64e
+GET {{url}}/products
+Authorization: {{token}}}
+
+###
+GET {{url}}/products?id=b548922a-98a9-4796-b910-6888c9e7d64e
+Authorization: {{token}}}
 
 ### make the body object placed after a blank line
-POST https://e7fx0p93yj.execute-api.ap-southeast-2.amazonaws.com/prod/products
+POST {{url}}/products
+Authorization: {{token}}}
 content-type: application/json
 
 {    
@@ -14,7 +22,8 @@ content-type: application/json
 }
 
 ###
-PUT https://e7fx0p93yj.execute-api.ap-southeast-2.amazonaws.com/prod/products?id=b548922a-98a9-4796-b910-6888c9e7d64e
+PUT {{url}}/products?id=b548922a-98a9-4796-b910-6888c9e7d64e
+Authorization: {{token}}}
 content-type: application/json
 
 {    
@@ -23,4 +32,5 @@ content-type: application/json
 }
 
 ###
-DELETE https://e7fx0p93yj.execute-api.ap-southeast-2.amazonaws.com/prod/products?id=6072e4ec-f6b6-4651-bd15-e3cff2e68ff2
+DELETE {{url}}/products?id=5bcba375-8113-44c7-a3f5-77cf761c5f3f
+Authorization: {{token}}}

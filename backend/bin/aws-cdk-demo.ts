@@ -28,8 +28,8 @@ const app = new cdk.App();
 
 const dynamoDBTable= new DynamoDBStack(app, 'DynamoDBStack');
 const lambdaStack= new LambdaStack(app, 'LambdaStack',{dynamoDBTable:dynamoDBTable.table});
-new AuthStack(app, 'AuthStack');
-new ApiGatewayStack(app, 'ApiGatewayStack', { lambdaHandler: lambdaStack.lambdaHandler});
+const authStack=new AuthStack(app, 'AuthStack');
+new ApiGatewayStack(app, 'ApiGatewayStack', { lambdaHandler: lambdaStack.lambdaHandler, userPool:authStack.userPool});
 
 
 
