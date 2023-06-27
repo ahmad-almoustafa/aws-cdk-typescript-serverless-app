@@ -10,7 +10,7 @@
             "name": "CDK Debug local file",
             "runtimeArgs": [
                 "-r",
-                "ts-node/register"
+                "${workspaceFolder}/backend/node_modules/ts-node/register"
             ],
             "args": [
                 "${relativeFile}"
