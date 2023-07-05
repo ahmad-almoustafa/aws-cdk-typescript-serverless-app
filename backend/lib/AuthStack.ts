@@ -1,5 +1,5 @@
 import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
-import { UserPool, UserPoolClient } from "aws-cdk-lib/aws-cognito";
+import { CfnUserPoolGroup, UserPool, UserPoolClient } from "aws-cdk-lib/aws-cognito";
 import { Construct } from "constructs";
 export class AuthStack extends Stack{
     public  userPool:UserPool;
@@ -9,6 +9,7 @@ export class AuthStack extends Stack{
         super(scope, id, props);
         this.createUserPool();
         this.createUserPoolClient();
+        this.createAdminGroup();
     }
     
     private createUserPool(){
@@ -39,6 +40,14 @@ export class AuthStack extends Stack{
         // Output the User Pool Client ID
         new CfnOutput(this, 'ProductUserPoolClientId', {
             value:this.userPoolClient.userPoolClientId
+        })
+
+    }
+
+    private createAdminGroup(){
+        new CfnUserPoolGroup(this, 'Admins', {
+            userPoolId:this.userPool.userPoolId,
+            groupName:'Admins',
         })
 
     }

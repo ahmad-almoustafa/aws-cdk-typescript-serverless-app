@@ -1,7 +1,14 @@
 import { DeleteItemCommand, DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { APIGatewayEvent, APIGatewayProxyResult } from "aws-lambda";
+import { hasAdminGroup } from "../Utils";
 
 export const deleteProduct= async (event:APIGatewayEvent,dynamoDBClient:DynamoDBClient):Promise<APIGatewayProxyResult>=>{
+   if(!hasAdminGroup(event)){
+    return{
+        statusCode:401,
+        body:JSON.stringify('unauthorized access')
+    }
+   }
     const id=event.queryStringParameters?.id;
     if(process.env.dynamoDBTable && id){
         const params={
