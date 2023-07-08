@@ -4,9 +4,9 @@ import { CognitoIdentityClient } from "@aws-sdk/client-cognito-identity";
 import { fromCognitoIdentityPool } from "@aws-sdk/credential-providers";
 
 const awsRegion='ap-southeast-2';
-const userPoolId='ap-southeast-2_VGkRejYpD';
-const identityPoolId='ap-southeast-2:5b6af81a-0ac4-4260-a87c-b000e91decee';
-const userPoolWebClientId= '2e5uku9jvc98j5tu48nse9q4j4';
+const userPoolId='ap-southeast-2_c4vYDSoCh';
+const identityPoolId='ap-southeast-2:6c1fdba8-5061-43be-87ce-3e7f591330e3';
+const userPoolWebClientId= 'e5sb90nka10pkfkmuglfcebl';
 Amplify.configure({
     Auth: {
         region: awsRegion,

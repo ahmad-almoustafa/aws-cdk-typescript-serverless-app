@@ -4,15 +4,18 @@
     "ExportsOutputFnGetAttProducts229621C6Arn99C6A79A": "arn:aws:dynamodb:ap-southeast-2:304670474590:table/Products"
   },
   "AuthStack": {
-    "ProductIdentityPoolId": "ap-southeast-2:5b6af81a-0ac4-4260-a87c-b000e91decee",
-    "ProductUserPoolId": "ap-southeast-2_VGkRejYpD",
-    "ProductUserPoolClientId": "2e5uku9jvc98j5tu48nse9q4j4",
-    "ExportsOutputFnGetAttProductUserPoolE99D30AAArn4D472A95": "arn:aws:cognito-idp:ap-southeast-2:304670474590:userpool/ap-southeast-2_VGkRejYpD"
+    "ProductIdentityPoolId": "ap-southeast-2:6c1fdba8-5061-43be-87ce-3e7f591330e3",
+    "ProductUserPoolId": "ap-southeast-2_c4vYDSoCh",
+    "ProductUserPoolClientId": "e5sb90nka10pkfkmuglfcebl",
+    "ExportsOutputFnGetAttProductUserPoolE99D30AAArn4D472A95": "arn:aws:cognito-idp:ap-southeast-2:304670474590:userpool/ap-southeast-2_c4vYDSoCh"
   },
   "LambdaStack": {
-    "ExportsOutputFnGetAttProductsLambda1FF938FDArn41E090CD": "arn:aws:lambda:ap-southeast-2:304670474590:function:LambdaStack-ProductsLambda1FF938FD-O9Sz5EsyMGT5"
+    "ExportsOutputFnGetAttProductsLambda1FF938FDArn41E090CD": "arn:aws:lambda:ap-southeast-2:304670474590:function:LambdaStack-ProductsLambda1FF938FD-hyYMZiS2GBVi"
+  },
+  "UiDeploymentStack": {
+    "ProductFrontendURL": "d25lym6y2cf600.cloudfront.net"
   },
   "ApiGatewayStack": {
-    "CdkAppApiEndpoint20A6C893": "https://e7fx0p93yj.execute-api.ap-southeast-2.amazonaws.com/prod/"
+    "CdkAppApiEndpoint20A6C893": "https://gqzrahff5c.execute-api.ap-southeast-2.amazonaws.com/prod/"
   }
 }

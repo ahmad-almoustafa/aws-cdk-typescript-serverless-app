@@ -9,6 +9,7 @@ import { LambdaStack } from '../lib/LambdaStack';
 import { ApiGatewayStack } from '../lib/ApiGatewayStack';
 import { DynamoDBStack } from '../lib/DynamoDBStack';
 import { AuthStack } from '../lib/AuthStack';
+import { UiDeploymentStack } from '../lib/UiDeploymentStack';
 /**
  * if the app has multiple stacks => 
  * `cdk deploy --all` => deploy all => order is based on the dependency 
@@ -30,6 +31,8 @@ const dynamoDBTable= new DynamoDBStack(app, 'DynamoDBStack');
 const lambdaStack= new LambdaStack(app, 'LambdaStack',{dynamoDBTable:dynamoDBTable.table});
 const authStack=new AuthStack(app, 'AuthStack');
 new ApiGatewayStack(app, 'ApiGatewayStack', { lambdaHandler: lambdaStack.lambdaHandler, userPool:authStack.userPool});
+
+new UiDeploymentStack(app, 'UiDeploymentStack', { frontendFolderPath: '../frontend' });
 
 
 

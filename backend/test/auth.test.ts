@@ -5,8 +5,9 @@ import { ListBucketsCommand, S3Client } from "@aws-sdk/client-s3";
   * test_user_name
   * M;ki9!1wY2*Hn
   * 
+  * 
   * 2- change the status from force password to confirmed:
-  * aws cognito-idp admin-set-user-password --user-pool-id ap-southeast-2_VGkRejYpD --username test_user_name --password 'Mki9!1wY2Hn' --permanent
+  * aws cognito-idp admin-set-user-password --user-pool-id ap-southeast-2_c4vYDSoCh --username test_user_name --password 'Mki9!1wY2Hn' --permanent
   * Note: the password value contains special characters that need to be properly escaped or enclosed in quotation marks =>''
   * 
   * 
@@ -14,7 +15,7 @@ import { ListBucketsCommand, S3Client } from "@aws-sdk/client-s3";
 async function testAuth(){
     const authService=new AuthService();
     const result= await authService.login('test_user_name','Mki9!1wY2Hn');
-    // console.log('logged in user JWT token',result.getSignInUserSession().getIdToken().getJwtToken());
+    // console.log('logged in user JWT token',result.getSignInUserSession()?.getIdToken().getJwtToken());
 
     const credentials= await authService.generateTemporaryCredentials(result);
     console.log('credentials: ',credentials);
