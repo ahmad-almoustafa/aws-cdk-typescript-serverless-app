@@ -1,6 +1,6 @@
 import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
 import { CfnIdentityPool, CfnIdentityPoolRoleAttachment, CfnUserPoolGroup, UserPool, UserPoolClient } from "aws-cdk-lib/aws-cognito";
-import { FederatedPrincipal, Role } from "aws-cdk-lib/aws-iam";
+import { Effect, FederatedPrincipal, PolicyStatement, Role } from "aws-cdk-lib/aws-iam";
 import { Construct } from "constructs";
 export class AuthStack extends Stack{
     public  userPool:UserPool;
@@ -94,6 +94,13 @@ export class AuthStack extends Stack{
             }, 'sts:AssumeRoleWithWebIdentity')
             
         });
+        //with this: every authenticated user will have access to list s3
+        this.authenticatedRole.addToPolicy(new PolicyStatement({
+            effect: Effect.ALLOW,
+            actions: ['s3:listAllMyBuckets'],
+            resources: ['*']
+
+        }));
 
         //This role is assumed by the unauthenticated user=> who have not authenticated with the identity provider such as Cognito User Pools
         this.unauthenticatedRole = new Role(this, 'CognitoDefaultUnauthenticatedRole', {
