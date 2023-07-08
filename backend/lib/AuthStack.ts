@@ -14,10 +14,11 @@ export class AuthStack extends Stack{
         super(scope, id, props);
         this.createUserPool();
         this.createUserPoolClient();
-        this.createAdminGroup();
+      
         this.createIdentityPool();
         this.createRoles();
         this.attachRoles();
+        this.createAdminGroup();
     }
     
     private createUserPool(){
@@ -56,6 +57,7 @@ export class AuthStack extends Stack{
         new CfnUserPoolGroup(this, 'Admins', {
             userPoolId:this.userPool.userPoolId,
             groupName:'Admins',
+            roleArn: this.adminRole.roleArn // admin role need to be created before the group
         })
 
     }
@@ -94,13 +96,6 @@ export class AuthStack extends Stack{
             }, 'sts:AssumeRoleWithWebIdentity')
             
         });
-        //with this: every authenticated user will have access to list s3
-        this.authenticatedRole.addToPolicy(new PolicyStatement({
-            effect: Effect.ALLOW,
-            actions: ['s3:listAllMyBuckets'],
-            resources: ['*']
-
-        }));
 
         //This role is assumed by the unauthenticated user=> who have not authenticated with the identity provider such as Cognito User Pools
         this.unauthenticatedRole = new Role(this, 'CognitoDefaultUnauthenticatedRole', {
@@ -109,6 +104,21 @@ export class AuthStack extends Stack{
                 'ForAnyValue:StringLike': { 'cognito-identity.amazonaws.com:amr': 'unauthenticated' },  
             }, 'sts:AssumeRoleWithWebIdentity')
         });
+        //with this: only users from admin group will have access to list s3
+        this.adminRole = new Role(this, 'CognitoAdminRole', {
+            assumedBy: new FederatedPrincipal('cognito-identity.amazonaws.com', {
+                StringEquals: { 'cognito-identity.amazonaws.com:aud': this.identityPool.ref },
+                'ForAnyValue:StringLike': { 'cognito-identity.amazonaws.com:amr': 'authenticated' },
+            
+            }, 'sts:AssumeRoleWithWebIdentity')
+        });
+
+        this.adminRole.addToPolicy(new PolicyStatement({
+            effect: Effect.ALLOW,
+            actions: ['s3:listAllMyBuckets'],
+            resources: ['*']
+
+        }));
     }
 
     /**
