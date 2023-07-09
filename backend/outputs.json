@@ -9,11 +9,11 @@
     "ProductUserPoolClientId": "e5sb90nka10pkfkmuglfcebl",
     "ExportsOutputFnGetAttProductUserPoolE99D30AAArn4D472A95": "arn:aws:cognito-idp:ap-southeast-2:304670474590:userpool/ap-southeast-2_c4vYDSoCh"
   },
-  "LambdaStack": {
-    "ExportsOutputFnGetAttProductsLambda1FF938FDArn41E090CD": "arn:aws:lambda:ap-southeast-2:304670474590:function:LambdaStack-ProductsLambda1FF938FD-hyYMZiS2GBVi"
-  },
   "UiDeploymentStack": {
     "ProductFrontendURL": "d25lym6y2cf600.cloudfront.net"
+  },
+  "LambdaStack": {
+    "ExportsOutputFnGetAttProductsLambda1FF938FDArn41E090CD": "arn:aws:lambda:ap-southeast-2:304670474590:function:LambdaStack-ProductsLambda1FF938FD-hyYMZiS2GBVi"
   },
   "ApiGatewayStack": {
     "CdkAppApiEndpoint20A6C893": "https://gqzrahff5c.execute-api.ap-southeast-2.amazonaws.com/prod/"

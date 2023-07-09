@@ -32,7 +32,7 @@ const lambdaStack= new LambdaStack(app, 'LambdaStack',{dynamoDBTable:dynamoDBTab
 const authStack=new AuthStack(app, 'AuthStack');
 new ApiGatewayStack(app, 'ApiGatewayStack', { lambdaHandler: lambdaStack.lambdaHandler, userPool:authStack.userPool});
 
-new UiDeploymentStack(app, 'UiDeploymentStack', { frontendFolderPath: '../frontend' });
+new UiDeploymentStack(app, 'UiDeploymentStack', { frontendFolderPath: '../frontend/dist' });// deploy the build folder
 
 
 
