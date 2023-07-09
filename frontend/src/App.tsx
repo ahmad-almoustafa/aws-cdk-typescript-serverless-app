@@ -8,11 +8,12 @@ import Login from './components/Login';
 import { AuthService } from './services/AuthService';
 import AddProduct from './components/products/addProduct';
 import { DataService } from './services/DataService';
-
+//To maintain the AuthService instance and its values throughout the app, they must be lifted up outside the App()
+const authService = new AuthService();//handle authentication and authorization
+const dataService=new DataService(authService);//handle product CRUD operations
 function App() {
   const [username, setUsername] = useState('');
-  const authService = new AuthService();//handle authentication and authorization
-  const dataService=new DataService();//handle product CRUD operations
+
   return (
     <BrowserRouter>
       <Routes>

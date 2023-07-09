@@ -31,7 +31,6 @@ const Login: React.FC<LoginProps> = (props) => {
         }
         navigate('/profile');
     }
-    console.log('Login submitted:', username, password);
   };
 
   return (
