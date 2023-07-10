@@ -2,7 +2,7 @@
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
 import { AwsCdkDemoStack } from '../lib/aws-cdk-demo-stack';
-import { PhotosStack } from '../lib/photos-stack';
+import { PhotosStack } from '../lib/photosStack';
 import { PhotosHandlerStack } from '../lib/photos-handler-stack';
 import { BucketTagger } from './Tagger';
 import { LambdaStack } from '../lib/LambdaStack';
@@ -29,7 +29,8 @@ const app = new cdk.App();
 
 const dynamoDBTable= new DynamoDBStack(app, 'DynamoDBStack');
 const lambdaStack= new LambdaStack(app, 'LambdaStack',{dynamoDBTable:dynamoDBTable.table});
-const authStack=new AuthStack(app, 'AuthStack');
+const photosStack= new PhotosStack(app, 'PhotosStack');
+const authStack=new AuthStack(app, 'AuthStack',{photosBucket:photosStack.photosBucket});
 new ApiGatewayStack(app, 'ApiGatewayStack', { lambdaHandler: lambdaStack.lambdaHandler, userPool:authStack.userPool});
 
 new UiDeploymentStack(app, 'UiDeploymentStack', { frontendFolderPath: '../frontend/dist' });// deploy the build folder

@@ -1,7 +1,12 @@
 import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
 import { CfnIdentityPool, CfnIdentityPoolRoleAttachment, CfnUserPoolGroup, UserPool, UserPoolClient } from "aws-cdk-lib/aws-cognito";
 import { Effect, FederatedPrincipal, PolicyStatement, Role } from "aws-cdk-lib/aws-iam";
+import { IBucket } from "aws-cdk-lib/aws-s3";
 import { Construct } from "constructs";
+
+interface AuthStackProps extends StackProps{
+    photosBucket:IBucket;
+}
 export class AuthStack extends Stack{
     public  userPool:UserPool;
     private userPoolClient:UserPoolClient;
@@ -10,13 +15,13 @@ export class AuthStack extends Stack{
     private unauthenticatedRole:Role;
     private adminRole:Role;
 
-    constructor(scope:Construct, id:string, props?:StackProps) {
+    constructor(scope:Construct, id:string, props:AuthStackProps) {
         super(scope, id, props);
         this.createUserPool();
         this.createUserPoolClient();
       
         this.createIdentityPool();
-        this.createRoles();
+        this.createRoles(props.photosBucket);
         this.attachRoles();
         this.createAdminGroup();
     }
@@ -84,7 +89,7 @@ export class AuthStack extends Stack{
      * The identity pool uses IAM roles to authorize users to access AWS resources.
      * Cognito Identity Pool => you typically define at least two IAM roles: authenticated/unauthenticated users
      */
-    private createRoles(){
+    private createRoles(photosBucket:IBucket){
         //This role is assumed by the authenticated user=> who have successfully authenticated with the identity provider such as Cognito User Pools
         this.authenticatedRole = new Role(this, 'CognitoDefaultAuthenticatedRole', {
             /**
@@ -113,10 +118,15 @@ export class AuthStack extends Stack{
             }, 'sts:AssumeRoleWithWebIdentity')
         });
 
+        //give admin role access to crud operation on photosBucket
         this.adminRole.addToPolicy(new PolicyStatement({
             effect: Effect.ALLOW,
-            actions: ['s3:listAllMyBuckets'],
-            resources: ['*']
+            actions: [
+                's3:listAllMyBuckets',
+                's3:putObject',
+                's3:PutObjectAcl',
+            ],
+            resources: [photosBucket.bucketArn+'/*']
 
         }));
     }
