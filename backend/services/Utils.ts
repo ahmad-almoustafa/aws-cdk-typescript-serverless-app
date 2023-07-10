@@ -1,4 +1,4 @@
-import { APIGatewayEvent } from "aws-lambda"
+import { APIGatewayEvent, APIGatewayProxyResult } from "aws-lambda"
 
 export const hasAdminGroup=(event:APIGatewayEvent):boolean=>{
     //For Cognito authorizers
@@ -7,4 +7,13 @@ export const hasAdminGroup=(event:APIGatewayEvent):boolean=>{
         return groups.includes('Admins');
     }
     return false;
+}
+
+
+export function addCorsHeader(arg: APIGatewayProxyResult) {
+    if(!arg.headers) {
+        arg.headers = {}
+    }
+    arg.headers['Access-Control-Allow-Origin'] = '*';
+    arg.headers['Access-Control-Allow-Methods'] = '*';
 }

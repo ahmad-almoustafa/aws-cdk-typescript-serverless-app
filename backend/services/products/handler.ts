@@ -24,40 +24,43 @@ import { getTableDescription } from "./getTableDescription";
 import { getProducts } from "./getProducts";
 import { updateProduct } from "./updateProduct";
 import { deleteProduct } from "./deleteProduct";
+import { addCorsHeader } from "../Utils";
 
 //DynamoDBClient here so it can be reused in all methods
 const dynamoDBClient = new DynamoDBClient({});
 export const handler=async (event:APIGatewayProxyEvent, context:Context) :Promise<APIGatewayProxyResult> =>{
     let message:string='';
+    let response:APIGatewayProxyResult;
     //get table info
     //await getTableDescription(dynamoDBClient);
     try{
         switch(event.httpMethod){
             case 'GET':
-                const getResponse=  getProducts(event,dynamoDBClient);// need to wait to get the response
-                return getResponse;
+                response=  await getProducts(event,dynamoDBClient);// need to wait to get the response
+     
+              
             break;
             case 'POST':
-                const postResponse=   addProduct(event,dynamoDBClient);
-                return postResponse;
+                 response=  await addProduct(event,dynamoDBClient);
+          
             break;
             case 'PUT':
-                const putResponse=   updateProduct(event,dynamoDBClient);
-                console.log('response', putResponse)
-                return putResponse;
+                response= await  updateProduct(event,dynamoDBClient);
+                
             break;
             case 'DELETE':
-                const deleteResponse=   deleteProduct(event,dynamoDBClient);
-                console.log('response', deleteResponse)
-                return deleteResponse;
+                response=  await deleteProduct(event,dynamoDBClient);
+            
             break;
             default:
                 return {
                   statusCode: 404,
                   body: JSON.stringify('Not Found'),
                 };
+        
         }
-    
+           addCorsHeader(response);
+           return response;
     }catch( error){
         console.log(error);
         return {

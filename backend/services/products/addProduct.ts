@@ -35,7 +35,7 @@ export const addProduct=async (event:APIGatewayProxyEvent, dynamoDBClient:Dynamo
     }
     return {
         statusCode: 201,
-        body: JSON.stringify(`Item Added , id ${randomId}`)
+        body: JSON.stringify({message: 'Item Added' , id: randomId})
     }
 
 };

@@ -24,10 +24,10 @@ const AddProduct: React.FC<AddProductProps> = ({ dataService }) => {
     setImage(file);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit =async (e: React.FormEvent) => {
     e.preventDefault();
     if (title && price) {
-      const id=dataService?.addProduct(title, parseFloat(price), image || undefined);
+      const id=await dataService?.addProduct(title, parseFloat(price), image || undefined);
       setSubmitResult(` product created with id ${id}`);
 
       setTitle('');

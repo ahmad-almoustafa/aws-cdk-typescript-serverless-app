@@ -1,5 +1,5 @@
 import * as cdk from 'aws-cdk-lib'
-import { AuthorizationType, CognitoUserPoolsAuthorizer, LambdaRestApi, MethodOptions } from "aws-cdk-lib/aws-apigateway";
+import { AuthorizationType, CognitoUserPoolsAuthorizer, Cors, LambdaRestApi, MethodOptions, ResourceOptions } from "aws-cdk-lib/aws-apigateway";
 import { IUserPool } from 'aws-cdk-lib/aws-cognito';
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import { Construct } from "constructs";
@@ -37,7 +37,17 @@ export class ApiGatewayStack extends cdk.Stack{
 
         // Create a resource and method
         // endpoint e.g: https://nf0181o10e.execute-api.ap-southeast-2.amazonaws.com/prod/hello  
-        const productsResource = api.root.addResource('products');
+        
+        //enable CORS for your API Gateway in CDK, otherwise we'll get cors error when sending request from the frontend app
+        const optionsWithCors: ResourceOptions = {
+            defaultCorsPreflightOptions: {
+                allowOrigins: Cors.ALL_ORIGINS, // Allow requests from any origin
+                allowMethods: Cors.ALL_METHODS, // Allow all HTTP methods
+                allowHeaders: ['Authorization'], // Allow Authorization header
+            }
+        }
+        const productsResource = api.root.addResource('products', optionsWithCors);//CORS config applied only the products resources
+
         productsResource.addMethod('GET',undefined,optionsWithAuth);
         productsResource.addMethod('POST',undefined,optionsWithAuth);
         productsResource.addMethod('PUT',undefined,optionsWithAuth);//Don't forget to add the method you need

@@ -19,7 +19,7 @@ Amplify.configure({
 });  
 export class AuthService{
     private user: CognitoUser | undefined;
-    private jwtIdToken:string|undefined;
+    public  jwtIdToken:string|undefined;
     private temporaryCredentials:object|undefined|null;
    
     //login('test_user_name','Mki9!1wY2Hn');

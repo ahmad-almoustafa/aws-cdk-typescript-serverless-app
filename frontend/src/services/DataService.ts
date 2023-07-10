@@ -2,9 +2,9 @@ import { Credentials } from "@aws-sdk/client-cognito-identity";
 import { AuthService } from "./AuthService";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
-import { PhotosStack } from '../../../backend/outputs.json';
+import { PhotosStack, ApiGatewayStack } from '../../../backend/outputs.json';
 
-
+const ProductsApiUrl = ApiGatewayStack.CdkAppApiEndpoint20A6C893 + 'products'
 
 export class DataService{
     private  awsRegion='ap-southeast-2';
@@ -13,21 +13,35 @@ export class DataService{
         this.authService=authService;
 
     }
-    public async  addProduct(title:string, price:number, image?:File){
-
-        if (image){
+    public async  addProduct(title:string, price:number, image?:File):Promise<string>{
+        const product: { title: string; price: number; imageURL?: string } = {
+            title: title,
+            price: price,
+          };
+      
+      
+        if (image){ 
             const uploadUrl = await this.uploadPublicFile(image);
-            console.log(uploadUrl);
+            // console.log(uploadUrl);
+            product.imageURL=uploadUrl
         }
-        return 'test123';
+        const postResult  = await fetch(ProductsApiUrl, {
+            method: 'POST',
+            body: JSON.stringify(product),
+            headers: {
+                'Authorization': this.authService.jwtIdToken!
+            }
+        });
+        const postResultJSON= await postResult.json();
+      
+        return postResultJSON.id;
     }
 
 
     
     public async uploadPublicFile(file:File) {
-        console.log('uploadPublicFile: ',file);
         const credentials=await this.authService.getTemporaryCredentials();
-        console.log('credentials: ',credentials);
+        // console.log('credentials: ',credentials);
         const s3Client=new S3Client({
             credentials:credentials,
             region:this.awsRegion,
