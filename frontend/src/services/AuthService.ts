@@ -32,7 +32,7 @@ export class AuthService{
         return this.user?.getUsername();
     }
    
-   public async getTemporaryCredentials(){
+   public async getTemporaryCredentials():Promise<object|undefined|null>{
         //lazy initializing => if it's already defined return nit otherwise generate it
         if(this.temporaryCredentials){
             return this.temporaryCredentials;

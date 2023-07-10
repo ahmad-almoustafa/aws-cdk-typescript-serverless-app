@@ -70,6 +70,12 @@ const AddProduct: React.FC<AddProductProps> = ({ dataService }) => {
           onChange={handleImageChange}
         />
       </div>
+      {image && (
+      <div  className="text-center">
+        <h3>Uploaded Image:</h3>
+        <img src={URL.createObjectURL(image)} alt="Uploaded" />
+      </div>
+    )}
       <button type="submit" className="bg-blue-500 text-white rounded p-2 mt-4">
         Create Product
       </button>

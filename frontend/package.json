@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-cognito-identity": "^3.363.0",
+    "@aws-sdk/client-s3": "^3.367.0",
     "@aws-sdk/credential-providers": "^3.363.0",
     "aws-amplify": "^5.3.3",
     "react": "^18.2.0",
