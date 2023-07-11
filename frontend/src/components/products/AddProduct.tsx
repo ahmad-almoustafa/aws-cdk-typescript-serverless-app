@@ -21,7 +21,7 @@ const AddProduct: React.FC<AddProductProps> = ({ dataService }) => {
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    setImage(file);
+    setImage(file || null); // Handle undefined case explicitly
   };
 
   const handleSubmit =async (e: React.FormEvent) => {

@@ -1,8 +1,8 @@
-import { Credentials } from "@aws-sdk/client-cognito-identity";
 import { AuthService } from "./AuthService";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
 import { PhotosStack, ApiGatewayStack } from '../../../backend/outputs.json';
+import {ProductDOT } from "../components/Types";
 
 const ProductsApiUrl = ApiGatewayStack.CdkAppApiEndpoint20A6C893 + 'products'
 
@@ -36,13 +36,25 @@ export class DataService{
       
         return postResultJSON.id;
     }
-
+    
+    public async  getProducts():Promise<ProductDOT[]>{
+        const postResult  = await fetch(ProductsApiUrl, {
+            method: 'GET',
+            headers: {
+                'Authorization': this.authService.jwtIdToken!
+            }
+        });
+        const getResultJSON= await postResult.json();  
+        // console.log('getResultJSON',getResultJSON)
+        return getResultJSON;
+    }
 
     
     public async uploadPublicFile(file:File) {
         const credentials=await this.authService.getTemporaryCredentials();
         // console.log('credentials: ',credentials);
         const s3Client=new S3Client({
+            //@ts-ignore
             credentials:credentials,
             region:this.awsRegion,
         });
@@ -61,7 +73,7 @@ export class DataService{
           });
 
           try {
-            const response = await s3Client.send(command);
+            await s3Client.send(command);
             return `https://${command.input.Bucket}.s3.${this.awsRegion}.amazonaws.com/${command.input.Key}`
 
           } catch (error) {

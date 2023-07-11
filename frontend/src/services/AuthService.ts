@@ -32,7 +32,7 @@ export class AuthService{
         return this.user?.getUsername();
     }
    
-   public async getTemporaryCredentials():Promise<object|undefined|null>{
+   public async getTemporaryCredentials():Promise<object|undefined>{
         //lazy initializing => if it's already defined return nit otherwise generate it
         if(this.temporaryCredentials){
             return this.temporaryCredentials;
@@ -57,8 +57,6 @@ export class AuthService{
             });
             const credentials = await identityClient.config.credentials();
             return credentials;
-        }else{
-            return null;
         }
  
     }
